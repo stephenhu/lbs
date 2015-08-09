@@ -1,0 +1,2 @@
+# lbs
+nodejs blobstore
