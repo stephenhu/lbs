@@ -1,0 +1,27 @@
+{
+  "name": "lbs",
+  "description": "blobstore for nodejs",
+  "version": "0.2.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stephenhu/lbs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stephenhu/lbs/issues"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "crypto": "~0.0.3",
+    "debug": "~2.2.0",
+    "mkdirp": "~0.5.1",
+    "mocha": "~2.2.5",
+    "morgan": "~1.5.3",
+    "rimraf": "~2.4.2",
+    "sequelize": "~3.5.1",
+    "sequelize-cli": "~1.7.2",
+    "sqlite3": "~3.0.9",
+    "supertest": "~1.0.1",
+    "umzug": "~1.6.0"
+  }
+}

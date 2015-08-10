@@ -1,0 +1,20 @@
+{
+  "development": {
+    "storage": "./blobs/.lbs",
+    "host": "127.0.0.1",
+    "dialect": "sqlite",
+    "pool": { "max": 5, "min": 0, "idle": 10000 }
+  },
+  "test": {
+    "storage": "./blobs/.lbs",
+    "host": "127.0.0.1",
+    "dialect": "sqlite",
+    "pool": { "max": 5, "min": 0, "idle": 10000 }
+  },
+  "production": {
+    "storage": "./blobs/.lbs",
+    "host": "127.0.0.1",
+    "dialect": "sqlite",
+    "pool": { "max": 5, "min": 0, "idle": 10000 }
+  }
+}
