@@ -17,23 +17,11 @@ describe( "lbs", function() {
     lbs.init(done);
   });
   
-  /*
-  after(function() {
+  after(function(done) {
   
-    rimraf(HOME, function(err) {
-      
-      if(err) {
-        console.log(err);
-        console.log("Unable to remove testing directory.");
-      }
-      else {
-        console.log(".tests/blobs deleted.");
-      }
-      
-    });
+    rimraf(HOME, done);
      
   });
-  */
   
   it( "get non-existent blob should fail", function(done) {
     lbs.get( "abc", function(err, buf) {
@@ -45,11 +33,36 @@ describe( "lbs", function() {
 
   it( "put blob should succeed", function(done) {
 
-    lbs.put( path.join( __dirname, "test.js" ), done );
+    lbs.put( path.join( __dirname, "test.js" ), function(h) {
+      assert.notEqual(null, h);
+      done(); 
+    });
 
   });
 
-  it( "get blob should succeed", function() {  
+  it( "store existing blob should succeed", function(done) {
+    
+    lbs.put( path.join( __dirname, "test.js" ), function(h) {
+      assert.notEqual(null, h);
+      done(); 
+    });
+    
+  });
+
+  it( "get blob should succeed", function(done) {
+        
+    lbs.put(path.join(__dirname, "../package.json" ), function(h) {
+      
+      assert.notEqual(null, h);
+      
+      lbs.get(h, function(err, buf) {
+        assert.notEqual(null, buf);
+      });
+    
+    });
+
+    done();
+    
   });
   
 });
