@@ -1,6 +1,6 @@
 {
   "name": "lbs",
-  "description": "blobstore for nodejs",
+  "description": "local blobstore for nodejs",
   "version": "0.2.0",
   "license": "MIT",
   "repository": {
