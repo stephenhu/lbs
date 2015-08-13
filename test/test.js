@@ -18,13 +18,12 @@ describe( "lbs", function() {
   });
   
   after(function(done) {
-  
     rimraf(HOME, done);
-     
   });
   
   it( "get non-existent blob should fail", function(done) {
-    lbs.get( "abc", function(err, buf) {
+   
+    lbs.get( "abc", "myapp", "abc", function(err, buf) {
       assert.equal(null, buf);
       done();
     });
@@ -33,35 +32,41 @@ describe( "lbs", function() {
 
   it( "put blob should succeed", function(done) {
 
-    lbs.put( path.join( __dirname, "test.js" ), function(h) {
+    lbs.put(path.join(__dirname, "test.js"), "myapp", function(err, h) {
       assert.notEqual(null, h);
-      done(); 
+      done();
     });
 
   });
 
   it( "store existing blob should succeed", function(done) {
     
-    lbs.put( path.join( __dirname, "test.js" ), function(h) {
+    lbs.put(path.join(__dirname, "test.js"), "myapp", function(err, h) {
       assert.notEqual(null, h);
-      done(); 
+      done();
     });
     
   });
 
   it( "get blob should succeed", function(done) {
         
-    lbs.put(path.join(__dirname, "../package.json" ), function(h) {
+    lbs.put(path.join(__dirname, "../package.json" ), "myapp", function(err, res) {
       
-      assert.notEqual(null, h);
-      
-      lbs.get(h, function(err, buf) {
-        assert.notEqual(null, buf);
-      });
+      if(err) {
+        done(err);
+      }
+      else {
+        
+        assert.notEqual(null, res);
+                
+        lbs.get(res[0], "myapp", res[1], function(err, buf) {
+          assert.notEqual(null, buf);
+          done();
+        });
+                
+      }
     
     });
-
-    done();
     
   });
   
