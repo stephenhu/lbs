@@ -19,6 +19,7 @@ describe( "lbs", function() {
   
   after(function(done) {
     rimraf(HOME, done);
+    done();
   });
   
   it( "get non-existent blob should fail", function(done) {
@@ -32,17 +33,18 @@ describe( "lbs", function() {
 
   it( "put blob should succeed", function(done) {
 
-    lbs.put(path.join(__dirname, "test.js"), "myapp", function(err, h) {
-      assert.notEqual(null, h);
+    lbs.put(path.join(__dirname, "test.js"), "myapp", function(err, res) {
+      assert.notEqual(null, res);
+      console.log(res);
       done();
     });
 
   });
 
-  it( "store existing blob should succeed", function(done) {
+  it( "put existing blob should succeed", function(done) {
     
-    lbs.put(path.join(__dirname, "test.js"), "myapp", function(err, h) {
-      assert.notEqual(null, h);
+    lbs.put(path.join(__dirname, "test.js"), "myapp", function(err, res) {
+      assert.notEqual(null, res);
       done();
     });
     
@@ -59,15 +61,86 @@ describe( "lbs", function() {
         
         assert.notEqual(null, res);
                 
-        lbs.get(res[0], "myapp", res[1], function(err, buf) {
+        lbs.get(res.key, "myapp", res.token, function(err, buf) {
           assert.notEqual(null, buf);
-          done();
         });
-                
+        
+        done();        
       }
     
     });
     
   });
   
+  it( "get blob with invalid token should fail", function(done) {
+        
+    lbs.put(path.join(__dirname, "../package.json" ), "myapp", function(err, res) {
+      
+      if(err) {
+        done(err);
+      }
+      else {
+        
+        assert.notEqual(null, res);
+                
+        lbs.get(res.key, "myapp", "invalid", function(err, buf) {
+          assert.notEqual(null, err);
+        });
+        
+        done();   
+      }
+    
+    });
+    
+  });
+
+  it( "put same blob with different app", function(done) {
+        
+    lbs.put(path.join(__dirname, "../package.json" ), "myapp2", function(err, res) {
+      
+      if(err) {
+        done(err);
+      }
+      else {
+        
+        assert.notEqual(null, res);
+                
+        lbs.get(res.key, "myapp2", res.token, function(err, buf) {
+          assert.notEqual(null, buf);
+        });
+        
+        done();
+                
+      }
+    
+    });
+    
+  });
+
+  it( "store same blob with same app should not overwrite token", function(done) {
+        
+    lbs.put(path.join(__dirname, "../package.json" ), "myapp2", function(err, res) {
+      
+      if(err) {
+        done(err);
+      }
+      else {
+        
+        var token = res.token;
+
+        assert.notEqual(null, res);
+                
+        lbs.put(path.join(__dirname, "../package.json"), "myapp2", function(err, res2) {
+          assert.notEqual(null, res2);
+          asert.equal(token, res2.token);
+        });
+        
+        done();
+                
+      }
+    
+    });
+    
+  });
+   
 });
