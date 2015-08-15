@@ -19,7 +19,6 @@ describe( "lbs", function() {
   
   after(function(done) {
     rimraf(HOME, done);
-    done();
   });
   
   it( "get non-existent blob should fail", function(done) {
@@ -132,7 +131,7 @@ describe( "lbs", function() {
                 
         lbs.put(path.join(__dirname, "../package.json"), "myapp2", function(err, res2) {
           assert.notEqual(null, res2);
-          asert.equal(token, res2.token);
+          assert.equal(token, res2.token);
         });
         
         done();
