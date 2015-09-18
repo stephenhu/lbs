@@ -20,7 +20,7 @@
     "rimraf": "~2.4.2",
     "sequelize": "~3.5.1",
     "sequelize-cli": "~1.7.2",
-    "sqlite3": "~3.0.9",
+    "sqlite3": "~3.1.0",
     "supertest": "~1.0.1",
     "umzug": "~1.6.0"
   }
